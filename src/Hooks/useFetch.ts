@@ -2,8 +2,9 @@
 
 export default async function UseFetch(pageNumber: number, url: string) { 
 
+  console.log(url)
     
-  
+    
     if (!pageNumber || Number.isNaN(+pageNumber) || +pageNumber < 1 || +pageNumber > 5) {
       return []
     }
@@ -15,7 +16,7 @@ export default async function UseFetch(pageNumber: number, url: string) {
           Authorization: `Bearer ${process.env.NEXT_PUBLIC_NEWS_KEY}`,
         },
       }
-    );
+      );
   
     const apiJson = await apiResponse.json();
     console.log(apiJson);

@@ -21,8 +21,8 @@ export default function Page  ({params}: { params: {slug: string}} ) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pageNumber = parseInt(params.slug)
-  const TOP_HEADLINES_URL = `https://newsapi.org/v2/top-headlines?country=us&pageSize=6&page=${pageNumber}`
-
+  const TOP_HEADLINES_URL = `https://newsapi.org/v2/top-headlines?country=ng&pageSize=6&page=${pageNumber}`
+  console.log(TOP_HEADLINES_URL)
   useEffect(() => {
     // Fetch data when the component mounts
     const fetchData = async () => {
@@ -90,4 +90,3 @@ export default function Page  ({params}: { params: {slug: string}} ) {
     </div>
   );
 };
-

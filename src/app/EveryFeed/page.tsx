@@ -16,6 +16,10 @@ interface FeedProps {
   pageNumber: number;
   articles: Article[];
 }
+
+// const getAllURL = (query, dateFrom, dateTo,language, sortBy) => {
+//    return `https://newsapi.org/v2/everything?q=${query}&apiKey=${process.env.NEXT_PUBLIC_NEWS_KEY}&from=${dateFrom}&to=${dateTo}&language=${language}&sortBy=${sortBy}&page=${pageNumber}`
+// }
 export default function Page  ({params}: { params: {slug: string}} ) {
     const [query, setQuery] = useState("");
   const [dateTo, setDateTo] = useState("")
@@ -26,11 +30,15 @@ export default function Page  ({params}: { params: {slug: string}} ) {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const pageNumber = parseInt(params.slug)
-  const ALL_FEED_URL = `https://newsapi.org/v2/everything?q={query}&apiKey=${process.env.NEXT_PUBLIC_NEWS_KEY}&searchIn={title,description,content}&from={dateFrom}&to={dateTo}&language={language}&sortBy={sortBy}page=${pageNumber}`
+  const ALL_FEED_URL = `https://newsapi.org/v2/everything?q=${query}&from=${dateFrom}&to=${dateTo}&language=${language}&sortBy=${sortBy}&apiKey=${process.env.NEXT_PUBLIC_NEWS_KEY}`
+ // const ALL_FEED_URL = `https://newsapi.org/v2/everything?q={food}&apiKey=${process.env.NEXT_PUBLIC_NEWS_KEY}`
+
+ //getAllURL(query, dateFrom, dateTo, language, sortBy)
+
 
   const countryLangList = ["ar", "de", "en", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "ud", "zh"]
   const sortedByOptions = ["relevancy", "popularity", "publishedAt"]
-  useEffect(() => {
+  
     // Fetch data when the component mounts
     const fetchData = async () => {
       try {
@@ -44,9 +52,11 @@ export default function Page  ({params}: { params: {slug: string}} ) {
         setLoading(false);
       }
     };
+
+    useEffect(() => {
   
     fetchData();
-  }, [ALL_FEED_URL, pageNumber]);
+  }, [query, dateTo, dateFrom, language,sortBy]);
   
   return (
     <div className="">
@@ -55,7 +65,9 @@ export default function Page  ({params}: { params: {slug: string}} ) {
         <input
            placeholder="type something" 
            value={query} 
-           onChange={(e) =>  setQuery(e.target.value)}
+           onChange={(e) =>  {
+            setQuery(e.target.value)
+            fetchData()}}
            className="focus: outline-none border-2 border-gray-400 px-3 py-2 rounded-sm"/>
           <button></button>
            
@@ -64,13 +76,22 @@ export default function Page  ({params}: { params: {slug: string}} ) {
              <label>Start Date:</label>
              <input 
                type="date" name="startdate" required pattern="\d{4}-\d{2}-\d{2}"
-               className="focus: outline-none border-2 border-gray-400 ml-2"/>
+               className="focus: outline-none border-2 border-gray-400 ml-2"
+                value={dateFrom}
+                onChange={(e) =>  {
+                  setDateFrom(e.target.value)
+                  fetchData()}}
+                />
            </div>
            <div>
              <label>End Date:</label>
              <input 
               type="date" name="enddate" required pattern="\d{4}-\d{2}-\d{2}"
-              className="focus: outline-none border-2 border-gray-400 ml-2"/>
+              className="focus: outline-none border-2 border-gray-400 ml-2"
+              value={dateTo}
+              onChange={(e) =>  {
+                setDateTo(e.target.value)
+                fetchData()}}/>
            </div>
            </div>
 
