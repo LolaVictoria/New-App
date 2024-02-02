@@ -1,5 +1,3 @@
-
-
 export default async function UseFetch(pageNumber: number, url: string) { 
 
   console.log(url)
