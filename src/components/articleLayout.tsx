@@ -1,8 +1,8 @@
 "use client"
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import Navbar from "../../../components/navbar";
-import UseFetch from "../../../Hooks/useFetch"
+import Navbar from "../components/navbar";
+import UseFetch from "../Hooks/useFetch"
 import { useEffect, useState } from "react";
 
 interface Article {
@@ -24,7 +24,8 @@ export default function Page  ({params}: { params: {slug: string}} ) {
   const router = useRouter();
   const pageNumber = parseInt(params.slug)
   const TOP_HEADLINES_URL = `https://newsapi.org/v2/everything?q=${query}}&pageSize=6&from=2024-01-30&sortBy=relevancy&page=${pageNumber}&apikey=${process.env.NEXT_PUBLIC_NEWS_KEY}`
-  
+  // const TOP_HEADLINES_URL = `https://newsapi.org/v2/everything?q=pageant&pageSize=6&from=2024-01-30&sortBy=popularity&page=${pageNumber}&apikey=${process.env.NEXT_PUBLIC_NEWS_KEY}
+  // const TOP_HEADLINES_URL = `https://newsapi.org/v2/top-headline&country=ng&pageSize=6&page=${pageNumber}`
   console.log(TOP_HEADLINES_URL)
   useEffect(() => {
     // Fetch data when the component mounts
@@ -46,26 +47,26 @@ export default function Page  ({params}: { params: {slug: string}} ) {
   return (
     <div className="">
       <Navbar />
-      <div className="grid grid-cols-2 gap-x-10 gap-y-10 mx-5 mt-8 ">
+      <div className="grid grid-cols-2 gap-x-3 gap-y-5 mx-5 mt-8 ">
         {articles.map((article, index) => (
           <div
             key={index}
-            className="bg-white shadow-md rounded-md py-3 px-3"
+            className=" rounded-md p-2"
             onClick={() => (window.location.href = article.url)}
           >
-            <h1 className="font-bold text-md mb-8">{article.title}</h1>
-            <div className="grid grid-cols-4 gap-x-1">
-           <div className="col-span-2 grid grid-rows-3">
+            <h1 className="font-bold text-md my-4">{article.title}</h1>
+            <div className="flex items-start">
+           <div className="flex flex-col ">
 
-            <p className="font-medium text-sm row-span-2">{article.description}</p>
+            <p className="font-medium text-sm">{article.description}</p>
             
-            <p className="font-semibold row-span-1 align-text-bottom mt-2">{query} {" "} &bull; {article.author}</p>
+            <p className="font-semibold">{query} {" "} &bull; {article.author}</p>
             
            </div>
-            <div className="col-span-2">
+            <div className="">
             {article.urlToImage && <Image 
             src={article.urlToImage} alt={article.title} width={300} height={350}
-            className="rounded-md object-cover" />} 
+            className="rounded-lg" />} 
             </div>
             </div>
           </div>
@@ -78,7 +79,7 @@ export default function Page  ({params}: { params: {slug: string}} ) {
           className={pageNumber === 1 ? "m-4" : "m-4"}
           onClick={() => {
             if (pageNumber > 1) {
-              router.push(`/fashion/${pageNumber - 1}`)
+              router.push(`/feed/${pageNumber - 1}`)
               window.scrollTo(0, 0);
             }
           }}
@@ -86,13 +87,13 @@ export default function Page  ({params}: { params: {slug: string}} ) {
           &larr; Prev
         </div>
 
-        <div>Page {pageNumber}/5</div>
+        <div>Page {pageNumber}</div>
 
         <div
           className={pageNumber === 1 ? "m-4" : "m-4"}
           onClick={() => {
             if (pageNumber < 5) {
-              router.push(`/fashion/${pageNumber + 1}`)
+              router.push(`/feed/${pageNumber + 1}`)
                window.scrollTo(0, 0);
             }
           }}
