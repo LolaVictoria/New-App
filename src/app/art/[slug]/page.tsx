@@ -6,7 +6,7 @@ import ArticleLayout from "@/components/articleLayout";
 
 export default function Page  ({params}: { params: {slug: string}} ) {
 
-  const query = "business";
+  const query = "art";
   const pageNumber = parseInt(params.slug);
   
   return (

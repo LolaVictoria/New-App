@@ -23,7 +23,7 @@ const Navbar = ()  => {
                     onClick={() => router.push('/all/1')}>All</p>
                      <p 
                       className="font-semibold text-md my-1 mr-6"
-                      onClick={() => router.push('/business/1')}>Art</p>
+                      onClick={() => router.push('/art/1')}>Art</p>
                       <p 
                       className="font-semibold text-md my-1 mr-6"
                       onClick={() => router.push('/business/1')}>Business</p>
@@ -32,7 +32,7 @@ const Navbar = ()  => {
                       onClick={() => router.push('/fashion/1')}>Fashion</p>
                     < p 
                       className="font-semibold text-md my-1 mr-6"
-                      onClick={() => router.push('/business/1')}>Sport</p>
+                      onClick={() => router.push('sport/1')}>Sport</p>
                       
                     <p  className="font-semibold text-md my-1 mr-6"
                       onClick={() => router.push('/technology/1')}>Technology</p>
